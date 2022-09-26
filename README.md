@@ -1,9 +1,9 @@
 # API-sheme-for-bikeShop
 
 ## Пользователь
-Создание пользователя
+
 Для создания пользователя делать POST запрос в ручку /users со следующей структурой:
-```Java Script
+```JSON
 {
     "username": "String",
     "password": "String"
@@ -11,7 +11,8 @@
 ```
 
 Ответом ручки является следующая структура User:
-```
+
+```JSON
 {
     "id": "String",
     "username": "String",
@@ -24,24 +25,51 @@
 ## Авторизация
 Авторизация реализована через Basic access authentication в ручке /auth. Возвращается токен в виде строки.
 
-Настройки пользователя:
-Для изменения настроек аккаунта пользователя ручка PUT /settings
+## Интерфейс пользователя
+#### Настройки пользователя:
+Для изменения настроек аккаунта пользователя ручка PUT /userSettings
 Используется Bearer авторизация с полученным ранее токеном.
-```
+
+```JSON
 {
     "username": "String",
     "description": "String",
     "avatar": [File],
 }
 ```
+
+#### Раздел мои объявления  
+Раздел имеет вкладки: активные, на модерации, отказ, деакивированные
+Ручка GET /myAdvertisements с авторизацией по токену 
+Структура ответа:
+
+```JSON
+{
+"active": [{}, {}],
+"moderation": [{}, {}],
+"rejected": [{}, {}],
+"deactivated": [{}, {}]
+}
+```
+Либо можно сделать на каждую вкладку по ручке
+
 ## Объявления
-Для получения списка объявлений используется ручка GET /advertisements.
+#### Фильтрация
+Ручка GET /advertisements
 Доступна фильтрация через параметры запроса:
 по месту - location=locationId
 по категории - category=categoryId
-(от фронта: в фильтре есть priceRange и состояние condition)
+
+(Так же в фильтре есть ценовой диапазон - priceRange и состояние - condition которые тоже можно добавить в фильтры запроса)
+
+#### Пагинация
+ручка GET /адрес ?
+текущая страница - page=currentPage
+коливчество получаемых айтемов - count=pageSize 
+
 Ответ возвращается в следующем виде:
-```
+
+```JSON
 {
     "items": [
         {
@@ -68,23 +96,24 @@
     ]
 }
 ```
-+ Пагинация
 
 ## Создание объявления
-Для создания объявления используется ручка POST /advertisements. Используется Bearer авторизация с полученным ранее токеном. Ручка принимает объявление в виде multipart form:
+Для создания объявления используется ручка POST /advertisements.
+Используется Bearer авторизация с полученным ранее токеном. Ручка принимает объявление в виде multipart form:
 
 struct AdvertisementInsertRequest: 
 ```
-Content {
-  let title: String
-  let description: String
-  let date: String
-  let price: Double
-  let categoryId: UUID
-  let locationId: UUID
-  let photos: [File]
+  {
+    title: String
+    description: String
+    date: String
+    price: Double
+    categoryId: UUID
+    locationId: UUID
+    photos: [File]
 }
 ```
+
 cURL запроса:
 curl --location --request POST 'localhost:8080/advertisements/' \
 --form 'title="велек 3"' \
@@ -93,11 +122,21 @@ curl --location --request POST 'localhost:8080/advertisements/' \
 --form 'photos[0]=@"/Users/mikita/Desktop/IMG_6351.jpeg"' \
 --form 'category_id="1243fc56-4e6e-4dd2-aac3-497dc6900cad"'
 
+##Поиск 
+
+Поиск в рамках категории, по тайтлу объявления и локации.
+Параметры запроса:
+по месту - location=locationId
+по категории - category=categoryId
+по имени - title=searchText
+
+Ручка GET /ads_search
+ хз как с поиском и выводом объяв по фильтрам делается пагинация этот момент нужно обсудить 
 
 ## Работа с категориями
 Получение категорий
 Для получения списка категорий используется ручка GET /categories. Возвращаются сразу все возможные категории.
-```
+```JSON
     {
     "categories": [
         {
