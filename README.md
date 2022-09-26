@@ -3,14 +3,15 @@
 ## Пользователь
 Создание пользователя
 Для создания пользователя делать POST запрос в ручку /users со следующей структурой:
-
+```Java Script
 {
     "username": "String",
     "password": "String"
 }
+```
 
 Ответом ручки является следующая структура User:
-
+```
 {
     "id": "String",
     "username": "String",
@@ -19,20 +20,20 @@
     "createAt": "String",
     "updateAt": "String"
 }
- 
+```
 ## Авторизация
 Авторизация реализована через Basic access authentication в ручке /auth. Возвращается токен в виде строки.
 
 Настройки пользователя:
 Для изменения настроек аккаунта пользователя ручка PUT /settings
 Используется Bearer авторизация с полученным ранее токеном.
-
+```
 {
     "username": "String",
     "description": "String",
     "avatar": [File],
 }
-
+```
 ## Объявления
 Для получения списка объявлений используется ручка GET /advertisements.
 Доступна фильтрация через параметры запроса:
@@ -40,6 +41,7 @@
 по категории - category=categoryId
 (от фронта: в фильтре есть priceRange и состояние condition)
 Ответ возвращается в следующем виде:
+```
 {
     "items": [
         {
@@ -65,12 +67,15 @@
         }
     ]
 }
-
+```
 + Пагинация
 
-Создание объявления
+## Создание объявления
 Для создания объявления используется ручка POST /advertisements. Используется Bearer авторизация с полученным ранее токеном. Ручка принимает объявление в виде multipart form:
-struct AdvertisementInsertRequest: Content {
+
+struct AdvertisementInsertRequest: 
+```
+Content {
   let title: String
   let description: String
   let date: String
@@ -79,6 +84,7 @@ struct AdvertisementInsertRequest: Content {
   let locationId: UUID
   let photos: [File]
 }
+```
 cURL запроса:
 curl --location --request POST 'localhost:8080/advertisements/' \
 --form 'title="велек 3"' \
@@ -88,10 +94,11 @@ curl --location --request POST 'localhost:8080/advertisements/' \
 --form 'category_id="1243fc56-4e6e-4dd2-aac3-497dc6900cad"'
 
 
-Работа с категориями
+## Работа с категориями
 Получение категорий
 Для получения списка категорий используется ручка GET /categories. Возвращаются сразу все возможные категории.
-{
+```
+    {
     "categories": [
         {
             "id": "id1",
@@ -112,6 +119,7 @@ curl --location --request POST 'localhost:8080/advertisements/' \
             "parentId": "id1"
         }
     ]
-}
+} 
+```
 На стороне фронта следует отображать только непосредственно дочерние категории для какой-то корневой. То есть при parentId равном None отображать категории с parentId == None. При parentId равном "id1" отображать категории с parentId == "id1".
 
