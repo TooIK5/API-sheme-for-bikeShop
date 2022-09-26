@@ -18,6 +18,7 @@
     "username": "String",
     "description": "String",
     "avatar": [File],
+    "location": "locationId",
     "createAt": "String",
     "updateAt": "String"
 }
@@ -34,6 +35,7 @@
 {
     "username": "String",
     "description": "String",
+    "location": "locationId",
     "avatar": [File],
 }
 ```
@@ -122,7 +124,7 @@ curl --location --request POST 'localhost:8080/advertisements/' \
 --form 'photos[0]=@"/Users/mikita/Desktop/IMG_6351.jpeg"' \
 --form 'category_id="1243fc56-4e6e-4dd2-aac3-497dc6900cad"'
 
-##Поиск 
+## Поиск 
 
 Поиск в рамках категории, по тайтлу объявления и локации.
 Параметры запроса:
