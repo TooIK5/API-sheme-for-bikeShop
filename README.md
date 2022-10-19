@@ -79,6 +79,7 @@
             "id": "UUID",
             "title": "String",
             "description": "String",
+            "isLiked": "Boolean",
             "createAt": "Date",
             "updateAt": "Date",
             "price": 15,
