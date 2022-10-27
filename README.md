@@ -125,6 +125,19 @@ curl --location --request POST 'localhost:8080/advertisements/' \
 --form 'price="8800"' \
 --form 'photos[0]=@"/Users/mikita/Desktop/IMG_6351.jpeg"' \
 --form 'category_id="1243fc56-4e6e-4dd2-aac3-497dc6900cad"'
+## Update объявления 
+```
+  {
+    title: String
+    description: String
+    price: Double
+    typeid: UUID
+    locationId: UUID
+    img: [File]
+    state: Number
+    id: Number
+}
+```
 
 ## Поиск 
 
