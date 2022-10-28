@@ -64,41 +64,33 @@
 
 (Так же в фильтре есть ценовой диапазон - priceRange и состояние - condition которые тоже можно добавить в фильтры запроса)
 
-#### Пагинация
-- не знаю, как это должно работать здесь с фильтрами, с точки зрения бэка
-ручка GET /advertisements  
-текущая страница - page=currentPage
-коливчество получаемых айтемов - count=pageSize 
+#### Фильтрация 
+Включает в себя пагинацию
+Ручка GET /api/item/getall?typeid=1&locationid=1&limit=10&page=1&price=0,200&state=1
 
 Ответ возвращается в следующем виде:
 
 ```JSON
-{
-    "items": [
-        {
-            "id": "UUID",
-            "title": "String",
-            "description": "String",
-            "isLiked": "Boolean",
-            "createAt": "Date",
-            "updateAt": "Date",
-            "price": 15,
-            "published": true,
-            "categories": [
-                {
-                    "id": "UUID",
-                    "name": "Имя категории",
-                }
-            ],
-            "location": {
-                "id": "UUID",
-                "name": "String",
-                "parentId": "UUID?"
-            },
-            "photos": ["String"]
-        }
-    ]
-}
+[
+    {
+        "id": 3,
+        "username": "\"petya\"",
+        "title": "\"title\"",
+        "state": 1,
+        "userid": 2,
+        "description": "\"lorem\"",
+        "price": 200,
+        "published": true,
+        "locationid": 1,
+        "typeid": 1,
+        "photo": [
+            "16393a67-ca77-4a54-8870-c624d0557522.jpg",
+            "277cea8d-7000-4d80-bb7e-15a2a167f7f4.jpg"
+        ],
+        "createdAt": "2022-10-27T09:51:58.687Z",
+        "updatedAt": "2022-10-27T09:51:58.687Z"
+    }
+]
 ```
 
 ## Создание объявления
